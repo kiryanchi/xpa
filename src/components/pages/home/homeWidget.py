@@ -1,6 +1,5 @@
 from PySide6.QtWidgets import QWidget
 
-from src.components import MyQtWidget
 from src.components.pages.home import Ui_HomeWidget
 
 

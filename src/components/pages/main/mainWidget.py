@@ -1,8 +1,6 @@
 from PySide6.QtWidgets import QWidget
 
-from src.components.pages.home import HomeWidget
 from src.components.pages.main import Ui_MainWidget
-from src.components.pages.work import WorkStackedWidget, WorkListWidget
 
 
 class MainWidget(QWidget, Ui_MainWidget):

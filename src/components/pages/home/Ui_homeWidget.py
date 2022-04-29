@@ -49,14 +49,14 @@ class Ui_HomeWidget(object):
 
         self.gridLayout.addWidget(self.frame_2, 3, 0, 1, 2)
 
-        self.horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.label_2 = QLabel(HomeWidget)
+        self.label_2.setObjectName(u"label_2")
+        self.label_2.setMaximumSize(QSize(16777215, 26))
+        font = QFont()
+        font.setPointSize(26)
+        self.label_2.setFont(font)
 
-        self.gridLayout.addItem(self.horizontalSpacer, 4, 0, 1, 1)
-
-        self.createButton = QPushButton(HomeWidget)
-        self.createButton.setObjectName(u"createButton")
-
-        self.gridLayout.addWidget(self.createButton, 4, 1, 1, 1)
+        self.gridLayout.addWidget(self.label_2, 2, 0, 1, 2)
 
         self.frame = QFrame(HomeWidget)
         self.frame.setObjectName(u"frame")
@@ -91,15 +91,6 @@ class Ui_HomeWidget(object):
 
         self.gridLayout.addWidget(self.frame, 1, 0, 1, 2)
 
-        self.label_2 = QLabel(HomeWidget)
-        self.label_2.setObjectName(u"label_2")
-        self.label_2.setMaximumSize(QSize(16777215, 26))
-        font = QFont()
-        font.setPointSize(26)
-        self.label_2.setFont(font)
-
-        self.gridLayout.addWidget(self.label_2, 2, 0, 1, 2)
-
         self.label = QLabel(HomeWidget)
         self.label.setObjectName(u"label")
         self.label.setMaximumSize(QSize(16777215, 26))
@@ -118,11 +109,10 @@ class Ui_HomeWidget(object):
 
     def retranslateUi(self, HomeWidget):
         HomeWidget.setWindowTitle(QCoreApplication.translate("HomeWidget", u"Form", None))
-        self.createButton.setText(QCoreApplication.translate("HomeWidget", u"PushButton", None))
+        self.label_2.setText(QCoreApplication.translate("HomeWidget", u"\uacf5\uc9c0\uc0ac\ud56d", None))
         self.gjButton.setText(QCoreApplication.translate("HomeWidget", u"\uacbd\uc8fc\n"
 "\uad6c\ud604\uc911", None))
         self.hjButton.setText(QCoreApplication.translate("HomeWidget", u"\ud55c\uc804", None))
-        self.label_2.setText(QCoreApplication.translate("HomeWidget", u"\uacf5\uc9c0\uc0ac\ud56d", None))
         self.label.setText(QCoreApplication.translate("HomeWidget", u"\ud15c\ud50c\ub9bf", None))
     # retranslateUi
 
