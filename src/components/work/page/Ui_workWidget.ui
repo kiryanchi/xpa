@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>Ui_WorkWidget</class>
- <widget class="QWidget" name="Ui_WorkWidget">
+ <class>WorkWidget</class>
+ <widget class="QWidget" name="WorkWidget">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -29,9 +29,6 @@
    <property name="spacing">
     <number>0</number>
    </property>
-   <item row="0" column="0">
-    <widget class="QStackedWidget" name="workStackedWidget"/>
-   </item>
   </layout>
  </widget>
  <resources/>

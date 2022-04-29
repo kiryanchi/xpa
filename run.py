@@ -2,7 +2,7 @@ import sys
 
 from PySide6.QtWidgets import QApplication
 
-from components.main import Main
+from pages.main import Main
 
 
 def main(env):

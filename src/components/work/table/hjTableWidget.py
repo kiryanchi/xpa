@@ -1,6 +1,6 @@
 from PySide6.QtWidgets import QTableWidgetItem
 
-from src.components.pages.work.table import WorkTableWidget
+from src.components.work.table import WorkTableWidget
 
 
 class HjTableWidgetItem(QTableWidgetItem):

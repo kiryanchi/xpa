@@ -15,30 +15,24 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QGridLayout, QSizePolicy, QStackedWidget,
-    QWidget)
+from PySide6.QtWidgets import (QApplication, QGridLayout, QSizePolicy, QWidget)
 
-class Ui_Ui_WorkWidget(object):
-    def setupUi(self, Ui_WorkWidget):
-        if not Ui_WorkWidget.objectName():
-            Ui_WorkWidget.setObjectName(u"Ui_WorkWidget")
-        Ui_WorkWidget.resize(400, 300)
-        self.gridLayout = QGridLayout(Ui_WorkWidget)
+class Ui_WorkWidget(object):
+    def setupUi(self, WorkWidget):
+        if not WorkWidget.objectName():
+            WorkWidget.setObjectName(u"WorkWidget")
+        WorkWidget.resize(400, 300)
+        self.gridLayout = QGridLayout(WorkWidget)
         self.gridLayout.setSpacing(0)
         self.gridLayout.setObjectName(u"gridLayout")
         self.gridLayout.setContentsMargins(0, 0, 0, 0)
-        self.workStackedWidget = QStackedWidget(Ui_WorkWidget)
-        self.workStackedWidget.setObjectName(u"workStackedWidget")
 
-        self.gridLayout.addWidget(self.workStackedWidget, 0, 0, 1, 1)
+        self.retranslateUi(WorkWidget)
 
-
-        self.retranslateUi(Ui_WorkWidget)
-
-        QMetaObject.connectSlotsByName(Ui_WorkWidget)
+        QMetaObject.connectSlotsByName(WorkWidget)
     # setupUi
 
-    def retranslateUi(self, Ui_WorkWidget):
-        Ui_WorkWidget.setWindowTitle(QCoreApplication.translate("Ui_WorkWidget", u"Form", None))
+    def retranslateUi(self, WorkWidget):
+        WorkWidget.setWindowTitle(QCoreApplication.translate("WorkWidget", u"Form", None))
     # retranslateUi
 
