@@ -1,0 +1,6 @@
+.git/
+.env
+.python-version
+__pycache__/
+
+test.py
