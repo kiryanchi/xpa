@@ -8,7 +8,7 @@ def _convert(ui):
 
 
 def convert(uis):
-    DIR = './src/pages/'
+    DIR = './src/components/'
 
     for (root, _, files) in os.walk(DIR):
         if len(files) > 0:

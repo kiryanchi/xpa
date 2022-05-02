@@ -1,6 +1,6 @@
 from PySide6.QtWidgets import QTableWidgetItem
 
-from src.components.work.table import WorkTableWidget
+from src.components.work.table.workTableWidget import WorkTableWidget
 
 
 class GjTableWidgetItem(QTableWidgetItem):
@@ -9,5 +9,5 @@ class GjTableWidgetItem(QTableWidgetItem):
 
 
 class GjTableWidget(WorkTableWidget):
-    def __init__(self, main):
-        super().__init__(main)
+    def __init__(self, excel):
+        super().__init__(excel, 0, 3)

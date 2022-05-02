@@ -1,7 +1,9 @@
+from PySide6 import QtGui
 from PySide6.QtGui import QIcon
 from PySide6.QtWidgets import QWidget
 
 from src.components.main import Ui_MainWidget
+from src.tools.log import Log
 
 
 class MainWidget(QWidget, Ui_MainWidget):
@@ -21,11 +23,11 @@ class MainWidget(QWidget, Ui_MainWidget):
         self.mainStackedWidget.addWidget(self.work)
 
     def _buttonIcon(self):
-        self.homeButton.setIcon(QIcon("static/icon/home.png"))
-        self.newButton.setIcon(QIcon("static/icon/new.png"))
-        self.recentButton.setIcon(QIcon("static/icon/recent.png"))
-        self.openButton.setIcon(QIcon("static/icon/open.png"))
-        self.workButton.setIcon(QIcon("static/icon/work.png"))
+        self.homeButton.setIcon(QIcon("./static/icon/home.png"))
+        self.newButton.setIcon(QIcon("./static/icon/new.png"))
+        self.recentButton.setIcon(QIcon("./static/icon/recent.png"))
+        self.openButton.setIcon(QIcon("./static/icon/open.png"))
+        self.workButton.setIcon(QIcon("./static/icon/work.png"))
 
     def _connectButton(self):
         def _switchWidget(button):
@@ -37,6 +39,7 @@ class MainWidget(QWidget, Ui_MainWidget):
                 "Work": 4,
             }
 
+            Log.info(self, f"{button.text()} 전환")
             self.mainStackedWidget.setCurrentIndex(buttonIndex[button.text()])
 
             if button.text() == "Work":
@@ -58,3 +61,21 @@ class MainWidget(QWidget, Ui_MainWidget):
         self.open = openWidget
         self.work = workWidget
 
+    def dragEnterEvent(self, e: QtGui.QDragEnterEvent) -> None:
+        if e.mimeData().hasUrls():
+            e.accept()
+        else:
+            e.ignore()
+
+    def dragMoveEvent(self, e: QtGui.QDragMoveEvent) -> None:
+        if e.mimeData().hasUrls():
+            e.accept()
+        else:
+            e.ignore()
+
+    def dropEvent(self, e: QtGui.QDropEvent) -> None:
+        Log.debug(self, e)
+        if e.mimeData().hasUrls():
+            e.accept()
+        else:
+            e.ignore()

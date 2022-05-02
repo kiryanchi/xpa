@@ -1,3 +1,4 @@
+from PySide6 import QtGui
 from PySide6.QtWidgets import QWidget
 
 from src.components.work import Ui_WorkWidget
@@ -14,3 +15,21 @@ class WorkWidget(QWidget, Ui_WorkWidget):
         self.workList = WorkList()
         self.workStacked = WorkStacked()
         self.gridLayout.addWidget(self.workStacked)
+
+    def dragEnterEvent(self, e: QtGui.QDragEnterEvent) -> None:
+        if e.mimeData().hasUrls():
+            e.accept()
+        else:
+            e.ignore()
+
+    def dragMoveEvent(self, e: QtGui.QDragMoveEvent) -> None:
+        if e.mimeData().hasUrls():
+            e.accept()
+        else:
+            e.ignore()
+
+    def dropEvent(self, e: QtGui.QDropEvent) -> None:
+        if e.mimeData().hasUrls():
+            e.accept()
+        else:
+            e.ignore()
