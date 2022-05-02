@@ -9,6 +9,10 @@ def main(env):
     app = QApplication()
     main = Main()
     main.show()
+
+    # TEST
+    main.openButton.click()
+    main.open.openHjButton.click()
     app.exec()
 
 

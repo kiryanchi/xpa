@@ -19,28 +19,26 @@ class HjTableWidgetItemText(WorkTableWidgetItem):
         self.layout().addWidget(self.선로번호)
         self.layout().addWidget(self.전산화번호)
 
-    def dropEvent(self, e: QtGui.QDropEvent) -> None:
-        if e.mimeData().hasUrls():
-            e.accept()
-        else:
-            e.ignore()
-
 
 class HjTableWidgetItemImage(WorkTableWidgetItem):
     def __init__(self, img_data, hjTableWidget):
         super().__init__()
         Log.debug(self, img_data)
-        self.img_data = img_data
+        self.imgData = img_data
         self.hjTableWidget = hjTableWidget
         self.image = QLabel()
-        self.setImage(self.img_data)
+        self.setImage(self.imgData)
 
-    def setImage(self, img_data):
-        if img_data is None:
+        self.setLayout(QVBoxLayout())
+        self.layout().setContentsMargins(0, 0, 0, 0)
+        self.layout().addWidget(self.image)
+
+    def setImage(self, imgData):
+        self.imgData = imgData
+        if imgData is None:
             self.image.clear()
             return
-        self.img_data = img_data
-        data = QByteArray(self.img_data)
+        data = QByteArray(self.imgData)
         pixmap = QPixmap()
         pixmap.loadFromData(data)
         cell = self.hjTableWidget.cellWidget(0, 1)
@@ -48,17 +46,17 @@ class HjTableWidgetItemImage(WorkTableWidgetItem):
         self.image.setPixmap(pixmap)
 
     def resizeEvent(self, event: QtGui.QResizeEvent) -> None:
-        self.setImage(self.img_data)
+        self.setImage(self.imgData)
 
     def dropEvent(self, event: QtGui.QDropEvent) -> None:
-        Log.debug(self, "이미지 드롭")
-        extension = ['jpg', 'png', 'jpeg', 'JPG', 'PNG', 'JPEG']
-        url = event.mimeData().urls()[0]
-        url = str(url.toLocalFile())
-        if url.split('.')[-1] in extension:
-            with open(url, 'rb') as f:
-                self.img_data = f.read()
-            self.setImage(self.img_data)
+        if event.mimeData().hasUrls():
+            extension = ['jpg', 'png', 'jpeg', 'JPG', 'PNG', 'JPEG']
+            url = event.mimeData().urls()[0].toLocalFile()
+            Log.debug(self, url)
+            if url.split('.')[-1] in extension:
+                with open(url, 'rb') as f:
+                    self.imgData = f.read()
+                self.setImage(self.imgData)
 
 
 class HjTableWidget(WorkTableWidget):
@@ -66,6 +64,13 @@ class HjTableWidget(WorkTableWidget):
         super().__init__(excel, 0, 4)
         self.setHorizontalHeaderLabels(['작업내역/선로번호/전산화번호', '명찰', '전경', '근접'])
         self.init()
+
+    def addRow(self, index=None):
+        if index is None:
+            index = self.rowCount()
+
+        self.insertRow(index)
+        self.excel.addLine(index)
 
     def init(self):
         for i in range(self.excel.row):

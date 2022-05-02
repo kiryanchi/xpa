@@ -60,22 +60,3 @@ class MainWidget(QWidget, Ui_MainWidget):
         self.recent = recentWidget
         self.open = openWidget
         self.work = workWidget
-
-    def dragEnterEvent(self, e: QtGui.QDragEnterEvent) -> None:
-        if e.mimeData().hasUrls():
-            e.accept()
-        else:
-            e.ignore()
-
-    def dragMoveEvent(self, e: QtGui.QDragMoveEvent) -> None:
-        if e.mimeData().hasUrls():
-            e.accept()
-        else:
-            e.ignore()
-
-    def dropEvent(self, e: QtGui.QDropEvent) -> None:
-        Log.debug(self, e)
-        if e.mimeData().hasUrls():
-            e.accept()
-        else:
-            e.ignore()
