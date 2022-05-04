@@ -29,6 +29,9 @@ class WorkTableWidget(QTableWidget):
         self.excel = excel
 
         self.setSelectionMode(QAbstractItemView.SingleSelection)
+        self.setAcceptDrops(True)
+        self.setDragEnabled(True)
+        self.setDragDropMode(QAbstractItemView.InternalMove)
 
         self.setAlternatingRowColors(True)
         self.setFocusPolicy(Qt.StrongFocus)
@@ -38,5 +41,11 @@ class WorkTableWidget(QTableWidget):
         self.verticalHeader().setDefaultSectionSize(self.height()//5)
         self.setVerticalScrollMode(QAbstractItemView.ScrollPerPixel)
 
-    def resizeEvent(self, event: QtGui.QResizeEvent) -> None:
-        self.verticalHeader().setDefaultSectionSize(event.size().height()//5)
+    def resizeEvent(self, e: QtGui.QResizeEvent) -> None:
+        self.verticalHeader().setDefaultSectionSize(e.size().height() // 5)
+
+    def dropEvent(self, e:QtGui.QDropEvent) -> None:
+        currentRow = self.currentRow()
+        destRow = self.itemAt(e.pos())
+
+        print(currentRow, destRow)

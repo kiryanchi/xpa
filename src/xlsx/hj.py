@@ -18,6 +18,7 @@ class MyStyle(NamedStyle):
 
 class HJ:
     def __init__(self, file):
+        self.file = file
         self.root, self.name = os.path.split(file)
         self.wb = None
         self.sheet = None
@@ -71,7 +72,9 @@ class HJ:
                }, self.images[f"E{self._indexToLine(index)}"], self.images[f"F{self._indexToLine(index)}"], self.images[
                    f"G{self._indexToLine(index)}"]
 
-    def save(self, dest):
+    def save(self, dest=None):
+        if dest is None:
+            dest = self.file
         self.wb.save(dest)
 
     @staticmethod

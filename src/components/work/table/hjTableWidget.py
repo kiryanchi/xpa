@@ -8,11 +8,16 @@ from src.tools.log import Log
 
 
 class HjTableWidgetItemText(WorkTableWidgetItem):
-    def __init__(self, 내역):
+    def __init__(self, 내역=None):
         super().__init__()
-        self.작업내역 = QLineEdit(내역['작업내역'])
-        self.선로번호 = QLineEdit(내역['선로번호'])
-        self.전산화번호 = QLineEdit(내역['전산화번호'])
+        if 내역 is None:
+            self.작업내역 = QLineEdit('')
+            self.선로번호 = QLineEdit('')
+            self.전산화번호 = QLineEdit('')
+        else:
+            self.작업내역 = QLineEdit(내역['작업내역'])
+            self.선로번호 = QLineEdit(내역['선로번호'])
+            self.전산화번호 = QLineEdit(내역['전산화번호'])
 
         self.setLayout(QVBoxLayout())
         self.layout().addWidget(self.작업내역)
@@ -73,10 +78,18 @@ class HjTableWidget(WorkTableWidget):
             index = self.rowCount()
 
         self.insertRow(index)
+        self.excel.addLine()
+        self.setRowWidget(index, None, None, None, None)
+
+    def deleteRow(self, index=None):
+        if index is None:
+            index = self.rowCount()
+
+        self.excel.removeLine()
+        self.removeRow(index)
 
     def init(self):
-        for i in range(self._rowToIndex(self.excel.sheet.max_row)):
-            self.addRow()
+        self.setRowCount(self._rowToIndex(self.excel.sheet.max_row))
 
         for i in range(self._rowToIndex(self.excel.sheet.max_row)):
             self.setRowWidget(i, *self.excel.getLine(i))
