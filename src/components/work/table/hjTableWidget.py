@@ -65,18 +65,20 @@ class HjTableWidget(WorkTableWidget):
         self.setHorizontalHeaderLabels(['작업내역/선로번호/전산화번호', '명찰', '전경', '근접'])
         self.init()
 
+    def _rowToIndex(self, row):
+        return row - 2
+
     def addRow(self, index=None):
         if index is None:
             index = self.rowCount()
 
         self.insertRow(index)
-        self.excel.addLine(index)
 
     def init(self):
-        for i in range(self.excel.row):
+        for i in range(self._rowToIndex(self.excel.sheet.max_row)):
             self.addRow()
 
-        for i in range(self.excel.row):
+        for i in range(self._rowToIndex(self.excel.sheet.max_row)):
             self.setRowWidget(i, *self.excel.getLine(i))
 
     def setRowWidget(self, row, 내역, 명찰, 전경, 근접):
