@@ -117,7 +117,7 @@ class HJ:
         self._deleteImage(col, line)
         bytes_io = self.resizeImage(imageData)
         img = Image(bytes_io)
-        img.width, img.height = 272.64, 240
+        img.width, img.height = 272.64, 238.5
         self.sheet.add_image(img, f"{col}{line}")
         self.images[f"{col}{line}"] = img
 
@@ -153,10 +153,16 @@ class HJ:
 
         if 명찰:
             self.insertImage('E', line, 명찰)
+        else:
+            self._deleteImage('E', line)
         if 전경:
             self.insertImage('F', line, 전경)
+        else:
+            self._deleteImage('F', line)
         if 근접:
             self.insertImage('G', line, 근접)
+        else:
+            self._deleteImage('G', line)
 
     def save(self, dest=None):
         if dest is None:

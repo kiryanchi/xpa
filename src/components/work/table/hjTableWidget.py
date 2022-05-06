@@ -3,7 +3,7 @@ from io import BytesIO
 from PySide6 import QtGui
 from PySide6.QtCore import QByteArray, Qt
 from PySide6.QtGui import QPixmap
-from PySide6.QtWidgets import QVBoxLayout, QLineEdit, QLabel
+from PySide6.QtWidgets import QVBoxLayout, QLineEdit, QLabel, QTableWidgetItem
 
 from src.components.work.table.workTableWidget import WorkTableWidget, WorkTableWidgetItem
 from src.tools.log import Log
@@ -52,14 +52,18 @@ class HjTableWidgetItemImage(WorkTableWidgetItem):
         return self.imgData
 
     def setImage(self, imgData):
+        self.imgData = imgData
         if imgData.__class__.__name__ == 'Image':
+            print('_data()')
             self.imgData = imgData._data()
         if imgData is None:
+            print('None')
             self.imgData = imgData
             self.pixmap = None
             self.image.clear()
             return
         if self.pixmap is None:
+            print('pixmap none')
             self.pixmap = QPixmap()
         data = QByteArray(self.imgData)
         self.pixmap.loadFromData(data)
@@ -144,3 +148,27 @@ class HjTableWidget(WorkTableWidget):
         ]
         for i in range(len(tableItemWidgets)):
             self.setCellWidget(row, i, tableItemWidgets[i])
+            self.setItem(row, i, QTableWidgetItem())
+
+    def dropEvent(self, e:QtGui.QDropEvent) -> None:
+        current = {'row': self.currentRow(), 'column': self.currentColumn()}
+        dest = {'row': self.itemAt(e.pos()).row(), 'column': self.itemAt(e.pos()).column()}
+        print(current, dest)
+        currentWidget:HjTableWidgetItemImage = self.cellWidget(current['row'], current['column'])
+        destWidget:HjTableWidgetItemImage = self.cellWidget(dest['row'], dest['column'])
+
+        if currentWidget.__class__.__name__ == 'HjTableWidgetItemText':
+            if destWidget.__class__.__name__ == 'HjTableWidgetItemText':
+                # line swap
+                print('text')
+                pass
+
+        elif currentWidget.__class__.__name__ == 'HjTableWidgetItemImage':
+            if destWidget.__class__.__name__ == 'HjTableWidgetItemImage':
+                currentImgData = currentWidget.imgData
+                destImgData = destWidget.imgData
+                print("**", currentImgData == destImgData)
+                currentWidget.setImage(destImgData)
+                print("**", currentImgData == destImgData)
+                destWidget.setImage(currentImgData)
+                print("**", currentImgData == destImgData)

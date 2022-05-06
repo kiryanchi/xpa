@@ -47,6 +47,6 @@ class WorkTableWidget(QTableWidget):
 
     def dropEvent(self, e:QtGui.QDropEvent) -> None:
         currentRow = self.currentRow()
-        destRow = self.itemAt(e.pos())
+        destItem = self.itemAt(e.pos())
 
-        print(currentRow, destRow)
+        print(currentRow, destItem.row())
