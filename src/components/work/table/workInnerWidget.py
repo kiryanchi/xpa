@@ -16,7 +16,7 @@ class WorkInnerWidget(QWidget, Ui_WorkInnerWidget):
         self.addTableWidget()
         self.addButton.clicked.connect(lambda: self.tableWidget.addRow())
         self.removeButton.clicked.connect(lambda: self.tableWidget.deleteRow(self.tableWidget.currentRow()))
-        self.saveButton.clicked.connect(lambda: self.excel.save())
+        self.saveButton.clicked.connect(lambda: self.tableWidget.save())
 
     def addTableWidget(self):
         excelType = {

@@ -1,5 +1,7 @@
+from io import BytesIO
+
 from PySide6 import QtGui
-from PySide6.QtCore import QByteArray
+from PySide6.QtCore import QByteArray, Qt
 from PySide6.QtGui import QPixmap
 from PySide6.QtWidgets import QVBoxLayout, QLineEdit, QLabel
 
@@ -24,34 +26,55 @@ class HjTableWidgetItemText(WorkTableWidgetItem):
         self.layout().addWidget(self.선로번호)
         self.layout().addWidget(self.전산화번호)
 
+    def get내역(self):
+        return {'작업내역': self.작업내역.text(),
+                '선로번호': self.선로번호.text(),
+                '전산화번호': self.전산화번호.text()}
+
 
 class HjTableWidgetItemImage(WorkTableWidgetItem):
     def __init__(self, img_data, hjTableWidget):
         super().__init__()
-        Log.debug(self, img_data)
-        self.imgData = img_data
+        self.imgData = None
+        self.pixmap = None
+        self.resizeCount = 0
         self.hjTableWidget = hjTableWidget
         self.image = QLabel()
-        self.setImage(self.imgData)
+        self.setImage(img_data)
 
         self.setLayout(QVBoxLayout())
-        self.layout().setContentsMargins(0, 0, 0, 0)
+        self.layout().setContentsMargins(5, 5, 5, 5)
         self.layout().addWidget(self.image)
 
+    def getImg(self):
+        # if self.imgData:
+        #     return BytesIO(self.imgData)
+        return self.imgData
+
     def setImage(self, imgData):
-        self.imgData = imgData
+        if imgData.__class__.__name__ == 'Image':
+            self.imgData = imgData._data()
         if imgData is None:
+            self.imgData = imgData
+            self.pixmap = None
             self.image.clear()
             return
+        if self.pixmap is None:
+            self.pixmap = QPixmap()
         data = QByteArray(self.imgData)
-        pixmap = QPixmap()
-        pixmap.loadFromData(data)
-        cell = self.hjTableWidget.cellWidget(0, 1)
-        pixmap = pixmap.scaled(cell.width(), cell.height())
-        self.image.setPixmap(pixmap)
+        self.pixmap.loadFromData(data)
+        self.pixmap = self.pixmap.scaled(self.hjTableWidget.width() // 4, self.hjTableWidget.height() // 5)
+        self.image.setPixmap(self.pixmap)
 
     def resizeEvent(self, event: QtGui.QResizeEvent) -> None:
-        self.setImage(self.imgData)
+        if self.pixmap is not None:
+            self.resizeCount += 1
+            if self.resizeCount > 20:
+                self.setImage(self.imgData)
+                self.resizeCount = 0
+                return
+            self.pixmap = self.pixmap.scaled(self.hjTableWidget.width() // 4, self.hjTableWidget.height() // 5)
+            self.image.setPixmap(self.pixmap)
 
     def dropEvent(self, event: QtGui.QDropEvent) -> None:
         if event.mimeData().hasUrls():
@@ -63,12 +86,18 @@ class HjTableWidgetItemImage(WorkTableWidgetItem):
                     self.imgData = f.read()
                 self.setImage(self.imgData)
 
+    def keyPressEvent(self, event: QtGui.QKeyEvent) -> None:
+        if event.key() == Qt.Key_Escape:
+            print("key pressed")
+            print(self.hjTableWidget.currentItem())
+
 
 class HjTableWidget(WorkTableWidget):
     def __init__(self, excel):
         super().__init__(excel, 0, 4)
         self.setHorizontalHeaderLabels(['작업내역/선로번호/전산화번호', '명찰', '전경', '근접'])
         self.init()
+        print(self.columnCount(), self.rowCount())
 
     def _rowToIndex(self, row):
         return row - 2
@@ -94,8 +123,18 @@ class HjTableWidget(WorkTableWidget):
         for i in range(self._rowToIndex(self.excel.sheet.max_row)):
             self.setRowWidget(i, *self.excel.getLine(i))
 
+    def save(self):
+        for index in range(self._rowToIndex(self.excel.sheet.max_row)):
+            self.excel.saveLine(index,
+                                self.cellWidget(index, 0).get내역(),
+                                self.cellWidget(index, 1).getImg(),
+                                self.cellWidget(index, 2).getImg(),
+                                self.cellWidget(index, 3).getImg())
+        self.excel.loadImage()
+        self.excel.save()
+
     def setRowWidget(self, row, 내역, 명찰, 전경, 근접):
-        Log.debug(self, f"{내역}")
+        Log.debug(self, f"{내역}, {명찰}, {전경}, {근접}")
 
         tableItemWidgets = [
             HjTableWidgetItemText(내역),
@@ -104,5 +143,4 @@ class HjTableWidget(WorkTableWidget):
             HjTableWidgetItemImage(근접, self)
         ]
         for i in range(len(tableItemWidgets)):
-            Log.debug(self, f"{row},{i} 에 {tableItemWidgets[i]}")
             self.setCellWidget(row, i, tableItemWidgets[i])

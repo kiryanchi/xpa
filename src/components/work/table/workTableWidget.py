@@ -43,6 +43,7 @@ class WorkTableWidget(QTableWidget):
 
     def resizeEvent(self, e: QtGui.QResizeEvent) -> None:
         self.verticalHeader().setDefaultSectionSize(e.size().height() // 5)
+        self.horizontalHeader().setDefaultSectionSize(e.size().width() // 4)
 
     def dropEvent(self, e:QtGui.QDropEvent) -> None:
         currentRow = self.currentRow()
