@@ -7,11 +7,11 @@ from src.tools.log import Log
 
 
 class MainWidget(QWidget, Ui_MainWidget):
-    def __init__(self, homeWidget, newWidget, recentWidget, openWidget, workWidget):
+    def __init__(self, homeWidget, newWidget, recentWidget, openWidget, workWidget, settingWidget):
         super().__init__()
         self.setupUi(self)
         self._buttonIcon()
-        self._initWidget(homeWidget, newWidget, recentWidget, openWidget, workWidget)
+        self._initWidget(homeWidget, newWidget, recentWidget, openWidget, workWidget, settingWidget)
         self._addStackedWidget()
         self._connectButton()
 
@@ -21,6 +21,7 @@ class MainWidget(QWidget, Ui_MainWidget):
         self.mainStackedWidget.addWidget(self.recent)
         self.mainStackedWidget.addWidget(self.open)
         self.mainStackedWidget.addWidget(self.work)
+        self.mainStackedWidget.addWidget(self.setting)
 
     def _buttonIcon(self):
         self.homeButton.setIcon(QIcon("./static/icon/home.png"))
@@ -37,6 +38,7 @@ class MainWidget(QWidget, Ui_MainWidget):
                 "Recent": 2,
                 "Open": 3,
                 "Work": 4,
+                "Setting": 5,
             }
 
             Log.info(self, f"{button.text()} 전환")
@@ -53,10 +55,12 @@ class MainWidget(QWidget, Ui_MainWidget):
         self.recentButton.clicked.connect(lambda: _switchWidget(self.recentButton))
         self.openButton.clicked.connect(lambda: _switchWidget(self.openButton))
         self.workButton.clicked.connect(lambda: _switchWidget(self.workButton))
+        self.settingButton.clicked.connect(lambda: _switchWidget(self.settingButton))
 
-    def _initWidget(self, homeWidget, newWidget, recentWidget, openWidget, workWidget):
+    def _initWidget(self, homeWidget, newWidget, recentWidget, openWidget, workWidget, settingWidget):
         self.home = homeWidget
         self.new = newWidget
         self.recent = recentWidget
         self.open = openWidget
         self.work = workWidget
+        self.setting = settingWidget
