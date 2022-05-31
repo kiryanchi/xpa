@@ -150,12 +150,12 @@ class HjTableWidget(WorkTableWidget):
             self.setCellWidget(row, i, tableItemWidgets[i])
             self.setItem(row, i, QTableWidgetItem())
 
-    def dropEvent(self, e:QtGui.QDropEvent) -> None:
+    def dropEvent(self, e: QtGui.QDropEvent) -> None:
         current = {'row': self.currentRow(), 'column': self.currentColumn()}
         dest = {'row': self.itemAt(e.pos()).row(), 'column': self.itemAt(e.pos()).column()}
         print(current, dest)
-        currentWidget:HjTableWidgetItemImage = self.cellWidget(current['row'], current['column'])
-        destWidget:HjTableWidgetItemImage = self.cellWidget(dest['row'], dest['column'])
+        currentWidget = self.cellWidget(current['row'], current['column'])
+        destWidget = self.cellWidget(dest['row'], dest['column'])
 
         if currentWidget.__class__.__name__ == 'HjTableWidgetItemText':
             if destWidget.__class__.__name__ == 'HjTableWidgetItemText':
@@ -165,10 +165,8 @@ class HjTableWidget(WorkTableWidget):
 
         elif currentWidget.__class__.__name__ == 'HjTableWidgetItemImage':
             if destWidget.__class__.__name__ == 'HjTableWidgetItemImage':
+                print(self.excel.images)
                 currentImgData = currentWidget.imgData
                 destImgData = destWidget.imgData
-                print("**", currentImgData == destImgData)
                 currentWidget.setImage(destImgData)
-                print("**", currentImgData == destImgData)
                 destWidget.setImage(currentImgData)
-                print("**", currentImgData == destImgData)

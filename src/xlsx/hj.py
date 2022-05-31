@@ -65,10 +65,10 @@ class HJ:
     def _deleteImage(self, col, row):
         try:
             self.sheet._images.remove(self.images[f"{col}{row}"])
-        except ValueError:
+        except ValueError or KeyError:
             Log.debug(self, f"{col}{row} 이미지 없음")
         try:
-            del self.images[f"{col}{row}"]
+            self.images[f"{col}{row}"] = None
         except KeyError:
             Log.debug(self, f"{col}{row} images dict 없음")
 
@@ -123,16 +123,16 @@ class HJ:
 
     def loadImage(self):
         print(self.images)
-        # for image in self.sheet._images:
-        #     try:
-        #         r = image.anchor._from.row + 1
-        #         c = string.ascii_uppercase[image.anchor._from.col]
-        #     except AttributeError:
-        #         cell = image.anchor
-        #     else:
-        #         cell = f"{c}{r}"
-        #     self.images[cell] = image
-        # print(self.images)
+        for image in self.sheet._images:
+            try:
+                r = image.anchor._from.row + 1
+                c = string.ascii_uppercase[image.anchor._from.col]
+            except AttributeError:
+                cell = image.anchor
+            else:
+                cell = f"{c}{r}"
+            self.images[cell] = image
+        print(self.images)
 
     def resizeImage(self, imageData):
         imageData = io.BytesIO(imageData)
@@ -163,6 +163,8 @@ class HJ:
             self.insertImage('G', line, 근접)
         else:
             self._deleteImage('G', line)
+
+        print(self.images, self.sheet._images)
 
     def save(self, dest=None):
         if dest is None:
