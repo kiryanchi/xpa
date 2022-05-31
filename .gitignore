@@ -11,3 +11,5 @@ run.spec
 
 build/
 dist/
+
+config.json
