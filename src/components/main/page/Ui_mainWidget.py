@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'Ui_mainWidget.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.3.0
+## Created by: Qt User Interface Compiler version 6.2.4
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -23,7 +23,7 @@ class Ui_MainWidget(object):
     def setupUi(self, MainWidget):
         if not MainWidget.objectName():
             MainWidget.setObjectName(u"MainWidget")
-        MainWidget.resize(885, 773)
+        MainWidget.resize(885, 763)
         self.gridLayout = QGridLayout(MainWidget)
         self.gridLayout.setSpacing(0)
         self.gridLayout.setObjectName(u"gridLayout")
@@ -90,7 +90,10 @@ class Ui_MainWidget(object):
         self.workButton = QToolButton(self.frame_sideTab)
         self.workButton.setObjectName(u"workButton")
         self.workButton.setMinimumSize(QSize(80, 80))
-        self.workButton.setFont(font)
+        font1 = QFont()
+        font1.setPointSize(16)
+        font1.setBold(False)
+        self.workButton.setFont(font1)
         icon4 = QIcon()
         icon4.addFile(u"../../../static/icon/work.png", QSize(), QIcon.Normal, QIcon.Off)
         self.workButton.setIcon(icon4)
@@ -102,6 +105,21 @@ class Ui_MainWidget(object):
         self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
 
         self.verticalLayout.addItem(self.verticalSpacer)
+
+        self.settingButton = QToolButton(self.frame_sideTab)
+        self.settingButton.setObjectName(u"settingButton")
+        sizePolicy = QSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.settingButton.sizePolicy().hasHeightForWidth())
+        self.settingButton.setSizePolicy(sizePolicy)
+        self.settingButton.setMinimumSize(QSize(80, 80))
+        font2 = QFont()
+        font2.setPointSize(13)
+        font2.setBold(True)
+        self.settingButton.setFont(font2)
+
+        self.verticalLayout.addWidget(self.settingButton)
 
 
         self.gridLayout.addWidget(self.frame_sideTab, 0, 0, 1, 1)
@@ -138,5 +156,6 @@ class Ui_MainWidget(object):
         self.recentButton.setText(QCoreApplication.translate("MainWidget", u"Recent", None))
         self.openButton.setText(QCoreApplication.translate("MainWidget", u"Open", None))
         self.workButton.setText(QCoreApplication.translate("MainWidget", u"Work", None))
+        self.settingButton.setText(QCoreApplication.translate("MainWidget", u"Setting", None))
     # retranslateUi
 
