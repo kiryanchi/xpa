@@ -6,7 +6,7 @@ from PySide6.QtWidgets import QFileDialog
 
 from src.components.work import WorkWidget
 from src.tools.log import Log
-from src.xlsx import HJ
+from src.xlsx import HJ, GJ
 
 with open('config.json') as f:
     config = json.load(f)
@@ -21,11 +21,31 @@ class Work(WorkWidget):
     createHjSignal = Signal()
     loadHjSignal = Signal()
 
+    createGjSignal = Signal()
+    loadGjSignal = Signal()
+
     def __init__(self, main):
         super().__init__(main)
 
         self.createHjSignal.connect(self._createHj)
         self.loadHjSignal.connect(self._loadHj)
+
+        self.createGjSignal.connect(self._createGj)
+        self.loadGjSignal.connect(self._loadGj)
+
+    @Slot()
+    def _createGj(self):
+        if not (fileName := self._saveFileName()):
+            return
+        self._saveLastDirectory(fileName)
+        self._goToWork(GJ.createNewFile(fileName))
+
+    @Slot()
+    def _loadGj(self):
+        if not (fileName := self._loadFileName()):
+            return
+        self._saveLastDirectory(fileName)
+        self._goToWork(GJ(fileName))
 
     @Slot()
     def _createHj(self):

@@ -8,4 +8,4 @@ from src.components.main import MainWidget
 
 class Main(MainWidget):
     def __init__(self):
-        super().__init__(Home(self), QWidget(), QWidget(), Open(self), Work(self))
+        super().__init__(Home(self), Work(self))
