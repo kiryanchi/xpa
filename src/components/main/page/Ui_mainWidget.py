@@ -51,42 +51,6 @@ class Ui_MainWidget(object):
 
         self.verticalLayout.addWidget(self.homeButton)
 
-        self.newButton = QToolButton(self.frame_sideTab)
-        self.newButton.setObjectName(u"newButton")
-        self.newButton.setMinimumSize(QSize(80, 80))
-        self.newButton.setFont(font)
-        icon1 = QIcon()
-        icon1.addFile(u"../../../static/icon/new.png", QSize(), QIcon.Normal, QIcon.Off)
-        self.newButton.setIcon(icon1)
-        self.newButton.setIconSize(QSize(32, 32))
-        self.newButton.setToolButtonStyle(Qt.ToolButtonTextUnderIcon)
-
-        self.verticalLayout.addWidget(self.newButton)
-
-        self.recentButton = QToolButton(self.frame_sideTab)
-        self.recentButton.setObjectName(u"recentButton")
-        self.recentButton.setMinimumSize(QSize(80, 80))
-        self.recentButton.setFont(font)
-        icon2 = QIcon()
-        icon2.addFile(u"../../../static/icon/recent.png", QSize(), QIcon.Normal, QIcon.Off)
-        self.recentButton.setIcon(icon2)
-        self.recentButton.setIconSize(QSize(32, 32))
-        self.recentButton.setToolButtonStyle(Qt.ToolButtonTextUnderIcon)
-
-        self.verticalLayout.addWidget(self.recentButton)
-
-        self.openButton = QToolButton(self.frame_sideTab)
-        self.openButton.setObjectName(u"openButton")
-        self.openButton.setMinimumSize(QSize(80, 80))
-        self.openButton.setFont(font)
-        icon3 = QIcon()
-        icon3.addFile(u"../../../static/icon/open.png", QSize(), QIcon.Normal, QIcon.Off)
-        self.openButton.setIcon(icon3)
-        self.openButton.setIconSize(QSize(32, 32))
-        self.openButton.setToolButtonStyle(Qt.ToolButtonTextUnderIcon)
-
-        self.verticalLayout.addWidget(self.openButton)
-
         self.workButton = QToolButton(self.frame_sideTab)
         self.workButton.setObjectName(u"workButton")
         self.workButton.setMinimumSize(QSize(80, 80))
@@ -94,9 +58,9 @@ class Ui_MainWidget(object):
         font1.setPointSize(16)
         font1.setBold(False)
         self.workButton.setFont(font1)
-        icon4 = QIcon()
-        icon4.addFile(u"../../../static/icon/work.png", QSize(), QIcon.Normal, QIcon.Off)
-        self.workButton.setIcon(icon4)
+        icon1 = QIcon()
+        icon1.addFile(u"../../../static/icon/work.png", QSize(), QIcon.Normal, QIcon.Off)
+        self.workButton.setIcon(icon1)
         self.workButton.setIconSize(QSize(32, 32))
         self.workButton.setToolButtonStyle(Qt.ToolButtonTextUnderIcon)
 
@@ -152,9 +116,6 @@ class Ui_MainWidget(object):
     def retranslateUi(self, MainWidget):
         MainWidget.setWindowTitle(QCoreApplication.translate("MainWidget", u"XPA", None))
         self.homeButton.setText(QCoreApplication.translate("MainWidget", u"Home", None))
-        self.newButton.setText(QCoreApplication.translate("MainWidget", u"New", None))
-        self.recentButton.setText(QCoreApplication.translate("MainWidget", u"Recent", None))
-        self.openButton.setText(QCoreApplication.translate("MainWidget", u"Open", None))
         self.workButton.setText(QCoreApplication.translate("MainWidget", u"Work", None))
         self.settingButton.setText(QCoreApplication.translate("MainWidget", u"Setting", None))
     # retranslateUi
