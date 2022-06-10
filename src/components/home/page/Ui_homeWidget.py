@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'Ui_homeWidget.ui'
 ##
-## Created by: Qt User Interface Compiler version 6.3.0
+## Created by: Qt User Interface Compiler version 6.2.4
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -16,7 +16,8 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QFrame, QGridLayout, QHBoxLayout,
-    QLabel, QPushButton, QSizePolicy, QSpacerItem,
+    QHeaderView, QLabel, QPushButton, QSizePolicy,
+    QSpacerItem, QTableWidget, QTableWidgetItem, QVBoxLayout,
     QWidget)
 
 class Ui_HomeWidget(object):
@@ -31,20 +32,52 @@ class Ui_HomeWidget(object):
         self.frame_2.setFrameShape(QFrame.StyledPanel)
         self.frame_2.setFrameShadow(QFrame.Raised)
         self.gridLayout_2 = QGridLayout(self.frame_2)
+        self.gridLayout_2.setSpacing(0)
         self.gridLayout_2.setObjectName(u"gridLayout_2")
-        self.frame_3 = QFrame(self.frame_2)
-        self.frame_3.setObjectName(u"frame_3")
-        self.frame_3.setFrameShape(QFrame.StyledPanel)
-        self.frame_3.setFrameShadow(QFrame.Raised)
-
-        self.gridLayout_2.addWidget(self.frame_3, 0, 0, 1, 1)
-
+        self.gridLayout_2.setContentsMargins(0, 0, 0, 0)
         self.frame_4 = QFrame(self.frame_2)
         self.frame_4.setObjectName(u"frame_4")
         self.frame_4.setFrameShape(QFrame.StyledPanel)
         self.frame_4.setFrameShadow(QFrame.Raised)
+        self.verticalLayout_2 = QVBoxLayout(self.frame_4)
+        self.verticalLayout_2.setObjectName(u"verticalLayout_2")
+        self.label_4 = QLabel(self.frame_4)
+        self.label_4.setObjectName(u"label_4")
+        self.label_4.setMaximumSize(QSize(16777215, 50))
+        font = QFont()
+        font.setPointSize(20)
+        self.label_4.setFont(font)
+
+        self.verticalLayout_2.addWidget(self.label_4)
+
+        self.recentHjtableWidget = QTableWidget(self.frame_4)
+        self.recentHjtableWidget.setObjectName(u"recentHjtableWidget")
+
+        self.verticalLayout_2.addWidget(self.recentHjtableWidget)
+
 
         self.gridLayout_2.addWidget(self.frame_4, 0, 1, 1, 1)
+
+        self.frame_3 = QFrame(self.frame_2)
+        self.frame_3.setObjectName(u"frame_3")
+        self.frame_3.setFrameShape(QFrame.StyledPanel)
+        self.frame_3.setFrameShadow(QFrame.Raised)
+        self.verticalLayout = QVBoxLayout(self.frame_3)
+        self.verticalLayout.setObjectName(u"verticalLayout")
+        self.label_3 = QLabel(self.frame_3)
+        self.label_3.setObjectName(u"label_3")
+        self.label_3.setMaximumSize(QSize(16777215, 50))
+        self.label_3.setFont(font)
+
+        self.verticalLayout.addWidget(self.label_3)
+
+        self.recentGjTableWidget = QTableWidget(self.frame_3)
+        self.recentGjTableWidget.setObjectName(u"recentGjTableWidget")
+
+        self.verticalLayout.addWidget(self.recentGjTableWidget)
+
+
+        self.gridLayout_2.addWidget(self.frame_3, 0, 0, 1, 1)
 
 
         self.gridLayout.addWidget(self.frame_2, 3, 0, 1, 2)
@@ -52,9 +85,9 @@ class Ui_HomeWidget(object):
         self.label_2 = QLabel(HomeWidget)
         self.label_2.setObjectName(u"label_2")
         self.label_2.setMaximumSize(QSize(16777215, 26))
-        font = QFont()
-        font.setPointSize(26)
-        self.label_2.setFont(font)
+        font1 = QFont()
+        font1.setPointSize(26)
+        self.label_2.setFont(font1)
 
         self.gridLayout.addWidget(self.label_2, 2, 0, 1, 2)
 
@@ -94,7 +127,7 @@ class Ui_HomeWidget(object):
         self.label = QLabel(HomeWidget)
         self.label.setObjectName(u"label")
         self.label.setMaximumSize(QSize(16777215, 26))
-        self.label.setFont(font)
+        self.label.setFont(font1)
 
         self.gridLayout.addWidget(self.label, 0, 0, 1, 2)
 
@@ -109,10 +142,11 @@ class Ui_HomeWidget(object):
 
     def retranslateUi(self, HomeWidget):
         HomeWidget.setWindowTitle(QCoreApplication.translate("HomeWidget", u"Form", None))
-        self.label_2.setText(QCoreApplication.translate("HomeWidget", u"\uacf5\uc9c0\uc0ac\ud56d", None))
-        self.gjButton.setText(QCoreApplication.translate("HomeWidget", u"\uacbd\uc8fc\n"
-"\uad6c\ud604\uc911", None))
+        self.label_4.setText(QCoreApplication.translate("HomeWidget", u"\ud55c\uc804", None))
+        self.label_3.setText(QCoreApplication.translate("HomeWidget", u"\uacbd\uc8fc", None))
+        self.label_2.setText(QCoreApplication.translate("HomeWidget", u"\ucd5c\uadfc \uc791\uc5c5\ud55c \ud30c\uc77c", None))
+        self.gjButton.setText(QCoreApplication.translate("HomeWidget", u"\uacbd\uc8fc", None))
         self.hjButton.setText(QCoreApplication.translate("HomeWidget", u"\ud55c\uc804", None))
-        self.label.setText(QCoreApplication.translate("HomeWidget", u"\ud15c\ud50c\ub9bf", None))
+        self.label.setText(QCoreApplication.translate("HomeWidget", u"\uc791\uc5c5 \uc2dc\uc791\ud558\uae30", None))
     # retranslateUi
 

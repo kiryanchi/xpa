@@ -14,7 +14,7 @@ class Main(MainWidget):
         self.latestVersion = None
         self.currentVersion = None
         self.loadVersion()
-        super().__init__(Home(self), QWidget(), QWidget(), Open(self), Work(self), Setting(self))
+        super().__init__(Home(self), Work(self), Setting(self))
 
     def loadVersion(self):
         with open('./static/version', 'r') as f:
