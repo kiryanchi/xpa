@@ -22,6 +22,12 @@ class GjTableWidgetItem(WorkTableWidgetItem):
         self.layout().addWidget(self.lineEdit)
         self.layout().addWidget(self.image)
 
+    def getData(self):
+        return {
+            'imageData': self.imageData,
+            'text': self.lineEdit.text()
+        }
+
     def setText(self, text):
         self.lineEdit.setText(text)
 
@@ -78,7 +84,6 @@ class GjTableWidget(WorkTableWidget):
     def setRowWidget(self, row, line):
         col = 0
         for key, value in line.items():
-            print(key, value)
             self.setItem(row, col, QTableWidgetItem())
             self.setCellWidget(row, col, GjTableWidgetItem(value, self))
             col += 1
@@ -90,7 +95,15 @@ class GjTableWidget(WorkTableWidget):
         pass
 
     def save(self):
-        pass
+        for index in range(self.rowCount()):
+            self.excel.saveLine(index,
+                                self.cellWidget(index, 0).getData(),
+                                self.cellWidget(index, 1).getData(),
+                                self.cellWidget(index, 2).getData()
+                                )
+
+        self.excel.save()
+
 
     def dropEvent(self, event):
         current = {'row': self.currentRow(), 'column': self.currentColumn()}

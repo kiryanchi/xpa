@@ -38,11 +38,11 @@ class WorkTableWidget(QTableWidget):
         self.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
 
         self.verticalHeader().setSectionResizeMode(QHeaderView.Fixed)
-        self.verticalHeader().setDefaultSectionSize(self.height()//5)
+        self.verticalHeader().setDefaultSectionSize(self.height()//4)
         self.setVerticalScrollMode(QAbstractItemView.ScrollPerPixel)
 
     def resizeEvent(self, e: QtGui.QResizeEvent) -> None:
-        self.verticalHeader().setDefaultSectionSize(e.size().height() // 5)
+        self.verticalHeader().setDefaultSectionSize(e.size().height() // 4)
         self.horizontalHeader().setDefaultSectionSize(e.size().width() // 4)
 
     def dropEvent(self, e:QtGui.QDropEvent) -> None:

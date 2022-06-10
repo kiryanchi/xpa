@@ -1,8 +1,11 @@
+import io
 import os
 import shutil
 import string
 
 import openpyxl
+from openpyxl.drawing.image import Image
+from PIL import Image as PImage
 
 
 class GJ:
@@ -43,6 +46,22 @@ class GJ:
             }
         }
 
+    def insertImage(self, col, row, imageData):
+        cell = f"{col}{row}"
+        print(f"{cell} 사진 삽입")
+        if not imageData:
+            return
+        if cell in self.images and self.images[cell]._data() == imageData:
+            print(f'{cell}: 이미 같은 사진')
+            return
+        self._deleteImage(col, row)
+        bytes_io = self.resizeImage(imageData)
+        image = Image(bytes_io)
+        image.width, image.height = 50, 50
+        self.sheet.add_image(image, cell)
+        self.images[cell] = image
+        print(f"{cell} 사진 삽입 완료 {self.images}")
+
     @staticmethod
     def createNewFile(dest):
         NEW_FILE = "./static/gj.xlsx"
@@ -51,3 +70,62 @@ class GJ:
 
     def _indexToRow(self, index):
         return index * 22 + 4
+
+    def resizeImage(self, imageData):
+        imageData = io.BytesIO(imageData)
+        pimage = PImage.open(imageData)
+        pimage = pimage.resize((1200, 800))
+        bytes_io = io.BytesIO()
+        pimage.save(bytes_io, 'PNG')
+
+        return bytes_io
+
+    def _deleteImage(self, col, row):
+        cell = f"{col}{row}"
+        # print(self.images)
+        try:
+            self.sheet._images.remove(self.images[cell])
+        except KeyError:
+            print(f"{cell} 비어있는 공간~")
+        else:
+            del self.images[cell]
+
+    def save(self, dest=None):
+        if dest is None:
+            dest = self.file
+        self.wb.save(dest)
+        print('저장완료')
+
+    def saveLine(self, index, 공사전, 전주번호, 공사후):
+        textCol = ['B', None, 'P']
+        imageCol = ['A', 'I', 'O']
+
+        row = self._indexToRow(index)
+
+        # 공사전
+        if 공사전['imageData']:
+            print(f"{row}공사전 삽입")
+            self.insertImage(imageCol[0], row + 2, 공사전['imageData'])
+        else:
+            print(f"{row}공사전 사진 업슴")
+            self._deleteImage(imageCol[0], row + 2)
+
+        self.sheet[f"{textCol[0]}{row}"] = 공사전['text']
+
+        # 전주번호
+        if 전주번호['imageData']:
+            print(f"{row}전주번호 삽입")
+            self.insertImage(imageCol[1], row + 10, 전주번호['imageData'])
+        else:
+            print(f"{row}전주번호 없으")
+            self._deleteImage(imageCol[1], row + 10)
+
+        # 공사 후
+        if 공사후['imageData']:
+            print(f"{row}공사후 삽입")
+            self.insertImage(imageCol[2], row + 2, 공사후['imageData'])
+        else:
+            print(f"{row}공사후 사진 없음")
+            self._deleteImage(imageCol[2], row + 2)
+
+        self.sheet[f"{textCol[2]}{row}"] = 공사후['text']

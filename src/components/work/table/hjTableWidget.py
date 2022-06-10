@@ -134,7 +134,7 @@ class HjTableWidget(WorkTableWidget):
                                 self.cellWidget(index, 1).getImg(),
                                 self.cellWidget(index, 2).getImg(),
                                 self.cellWidget(index, 3).getImg())
-        self.excel.loadImage()
+        # self.excel.loadImage()
         self.excel.save()
 
     def setRowWidget(self, row, 내역, 명찰, 전경, 근접):
