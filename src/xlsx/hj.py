@@ -8,6 +8,8 @@ import openpyxl
 from openpyxl.drawing.image import Image
 from openpyxl.styles import NamedStyle, Alignment, Side, Border
 from PIL import Image as PImage
+
+from src.tools.config import Config
 from src.tools.log import Log
 
 
@@ -21,6 +23,7 @@ class MyStyle(NamedStyle):
 
 class HJ:
     def __init__(self, file):
+        self.conf = Config()
         self.file = file
         self.root, self.name = os.path.split(file)
         self.wb = None
@@ -117,7 +120,7 @@ class HJ:
         self._deleteImage(col, line)
         bytes_io = self.resizeImage(imageData)
         img = Image(bytes_io)
-        img.width, img.height = 272.64, 238.5
+        img.width, img.height = float(self.conf.config['hj']['width']), float(self.conf.config['hj']['height'])
         self.sheet.add_image(img, f"{col}{line}")
         self.images[f"{col}{line}"] = img
 

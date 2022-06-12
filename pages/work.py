@@ -5,16 +5,11 @@ from PySide6.QtCore import Signal, Slot
 from PySide6.QtWidgets import QFileDialog
 
 from src.components.work import WorkWidget
+from src.tools.config import Config
 from src.tools.log import Log
 from src.xlsx import HJ, GJ
 
-with open('config.json') as f:
-    config = json.load(f)
-
-print(config)
-
-if config['dir'] == "" or not os.path.isdir(config['dir']):
-    config['dir'] = os.path.dirname(os.path.abspath(__file__))
+conf = Config()
 
 
 class Work(WorkWidget):
@@ -72,10 +67,8 @@ class Work(WorkWidget):
         self.workStacked.addWork(excel)
 
     def _saveLastDirectory(self, fileName):
-        with open('config.json', 'w') as f:
-            config['dir'] = os.path.dirname(fileName)
-            Log.debug(self, config)
-            json.dump(config, f)
+        conf.config['dir'] = os.path.dirname(fileName)
+        conf.save()
 
     def _goToWork(self, excel):
         self.main.workButton.click()
@@ -83,9 +76,9 @@ class Work(WorkWidget):
         self._addWorkStackedItem(excel)
 
     def _loadFileName(self):
-        fileName, _ = QFileDialog.getOpenFileName(self, '불러올 엑셀 파일 이름', config['dir'], 'Excel File (*.xlsx)')
+        fileName, _ = QFileDialog.getOpenFileName(self, '불러올 엑셀 파일 이름', conf.config['dir'], 'Excel File (*.xlsx)')
         return fileName
 
     def _saveFileName(self):
-        fileName, _ = QFileDialog.getSaveFileName(self, '저장할 파일 이름', config['dir'], 'Excel File (*.xlsx)')
+        fileName, _ = QFileDialog.getSaveFileName(self, '저장할 파일 이름', conf.config['dir'], 'Excel File (*.xlsx)')
         return fileName

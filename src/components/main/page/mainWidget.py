@@ -41,6 +41,9 @@ class MainWidget(QWidget, Ui_MainWidget):
             else:
                 self.work.workList.hideList()
 
+            if button.text() == "Setting":
+                self.setting.loadConfig()
+
         self.homeButton.clicked.connect(lambda: _switchWidget(self.homeButton))
         self.workButton.clicked.connect(lambda: _switchWidget(self.workButton))
         self.settingButton.clicked.connect(lambda: _switchWidget(self.settingButton))

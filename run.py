@@ -1,8 +1,10 @@
+import os
 import sys
 
 from PySide6.QtWidgets import QApplication
 
 from pages.main import Main
+from src.tools.config import Config
 
 
 def main(env):
@@ -11,8 +13,9 @@ def main(env):
     main.show()
 
     # TEST
-    # main.openButton.click()
-    # main.open.openHjButton.click()
+    if env == 'dev':
+        main.home.gjButton.click()
+
     app.exec()
 
 
