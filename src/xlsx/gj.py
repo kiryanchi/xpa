@@ -12,7 +12,7 @@ from src.tools.config import Config
 
 class GJ:
     def __init__(self, file):
-        self.conf = Config()
+        self.conf = Config('./static/config.json')
         self.file = file
         self.root, self.name = os.path.split(file)
 
@@ -60,7 +60,7 @@ class GJ:
         self._deleteImage(col, row)
         bytes_io = self.resizeImage(imageData)
         image = Image(bytes_io)
-        image.width, image.height = float(self.conf.config['gj']['width']), float(self.conf.config['gj']['height'])
+        image.width, image.height = float(self.conf.values.gj.width), float(self.conf.values.gj.height)
         self.sheet.add_image(image, cell)
         self.images[cell] = image
         print(f"{cell} 사진 삽입 완료 {self.images}")

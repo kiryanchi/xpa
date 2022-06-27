@@ -9,8 +9,6 @@ from src.tools.config import Config
 from src.tools.log import Log
 from src.xlsx import HJ, GJ
 
-conf = Config()
-
 
 class Work(WorkWidget):
     createHjSignal = Signal()
@@ -67,8 +65,8 @@ class Work(WorkWidget):
         self.workStacked.addWork(excel)
 
     def _saveLastDirectory(self, fileName):
-        conf.config['dir'] = os.path.dirname(fileName)
-        conf.save()
+        self.main.conf.values.dir = os.path.dirname(fileName)
+        self.main.conf.export('./static/config.json')
 
     def _goToWork(self, excel):
         self.main.workButton.click()
@@ -76,9 +74,9 @@ class Work(WorkWidget):
         self._addWorkStackedItem(excel)
 
     def _loadFileName(self):
-        fileName, _ = QFileDialog.getOpenFileName(self, '불러올 엑셀 파일 이름', conf.config['dir'], 'Excel File (*.xlsx)')
+        fileName, _ = QFileDialog.getOpenFileName(self, '불러올 엑셀 파일 이름', self.main.conf.values.dir, 'Excel File (*.xlsx)')
         return fileName
 
     def _saveFileName(self):
-        fileName, _ = QFileDialog.getSaveFileName(self, '저장할 파일 이름', conf.config['dir'], 'Excel File (*.xlsx)')
+        fileName, _ = QFileDialog.getSaveFileName(self, '저장할 파일 이름', self.main.conf.values.dir, 'Excel File (*.xlsx)')
         return fileName

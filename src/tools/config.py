@@ -2,31 +2,39 @@ import json
 import os
 import shutil
 
+from easydict import EasyDict
+
 
 class Config:
-    def __new__(cls, *args, **kwargs):
-        if not hasattr(cls, "_instance"):
-            cls._instance = super().__new__(cls)
-        return cls._instance
+    def __init__(self, file_path):
+        self.values = EasyDict()
 
-    def __init__(self):
-        with open('./static/config.json') as f:
-            self.config = json.load(f)
+        if file_path:
+            self.file_path = file_path
+            self.reload()
 
-        self.isCorrectConfig()
+    def reload(self):
+        self.clear()
+        if self.file_path:
+            with open(self.file_path, 'r') as f:
+                self.values.update(json.load(f))
 
-    def save(self):
-        with open('./static/config.json', 'w+') as f:
-            json.dump(self.config, f)
+    def clear(self):
+        self.values.clear()
 
-    def isCorrectConfig(self):
-        try:
-            assert 'dir' in self.config
-            assert 'hj' in self.config
-            assert 'gj' in self.config
-            assert 'width' in self.config['hj']
-            assert 'width' in self.config['gj']
-            assert 'height' in self.config['hj']
-            assert 'height' in self.config['gj']
-        except AssertionError as e:
-            print('잘못된 config')
+    def update(self, in_dict):
+        for (k1, v1) in in_dict.items():
+            if isinstance(v1, dict):
+                for (k2, v2) in v1.items():
+                    if isinstance(v2, dict):
+                        for (k3, v3) in v2.items():
+                            self.values[k1][k2][k3] = v3
+                    else:
+                        self.values[k1][k2] = v2
+            else:
+                self.values[k1] = v1
+
+    def export(self, save_file_name):
+        if save_file_name:
+            with open(save_file_name, 'w') as f:
+                json.dump(dict(self.values), f)

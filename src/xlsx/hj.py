@@ -23,7 +23,7 @@ class MyStyle(NamedStyle):
 
 class HJ:
     def __init__(self, file):
-        self.conf = Config()
+        self.conf = Config('./static/config.json')
         self.file = file
         self.root, self.name = os.path.split(file)
         self.wb = None
@@ -120,7 +120,7 @@ class HJ:
         self._deleteImage(col, line)
         bytes_io = self.resizeImage(imageData)
         img = Image(bytes_io)
-        img.width, img.height = float(self.conf.config['hj']['width']), float(self.conf.config['hj']['height'])
+        img.width, img.height = float(self.conf.values.hj.width), float(self.conf.hj.height)
         self.sheet.add_image(img, f"{col}{line}")
         self.images[f"{col}{line}"] = img
 

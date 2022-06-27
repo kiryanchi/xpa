@@ -4,7 +4,6 @@ import sys
 from PySide6.QtWidgets import QApplication
 
 from pages.main import Main
-from src.tools.config import Config
 
 
 def main(env):

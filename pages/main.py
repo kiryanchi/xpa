@@ -7,6 +7,7 @@ from pages.open import Open
 from pages.work import Work
 from pages.setting import Setting
 from src.components.main import MainWidget
+
 from src.tools.config import Config
 
 
@@ -15,6 +16,7 @@ class Main(MainWidget):
         self.latestVersion = None
         self.currentVersion = None
         self.loadVersion()
+        self.conf = Config('./static/config.json')
         super().__init__(Home(self), Work(self), Setting(self))
 
         if self.currentVersion != self.latestVersion:
